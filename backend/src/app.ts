@@ -12,10 +12,19 @@ export const app = express();
 // Security headers
 app.use(helmet());
 
+const allowedOrigins = [
+  env.CLIENT_URL,
+  ...env.CLIENT_URLS.split(',').map((origin) => origin.trim()).filter(Boolean),
+  'https://inventory.brajmart.com',
+  'https://brajmartinventory.vercel.app',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+];
+
 // CORS configuration
 app.use(
   cors({
-    origin: [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: [

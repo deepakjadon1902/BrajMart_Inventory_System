@@ -10,6 +10,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(5000),
   MONGODB_URI: z.string().trim().optional(),
   CLIENT_URL: z.string().default('http://localhost:5173'),
+  CLIENT_URLS: z.string().optional(),
   JWT_SECRET: z.string().default('brajmart-super-secret-key-production'),
 });
 
@@ -28,4 +29,5 @@ if (!isTest && !parsed.data.MONGODB_URI) {
 export const env = {
   ...parsed.data,
   MONGODB_URI: parsed.data.MONGODB_URI || '',
+  CLIENT_URLS: parsed.data.CLIENT_URLS || '',
 };

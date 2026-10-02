@@ -16,6 +16,10 @@ export async function apiClient<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
+  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const requestUrl = apiBaseUrl ? `${apiBaseUrl}${normalizedEndpoint}` : normalizedEndpoint;
+
   const userRole = localStorage.getItem('brajmart_role') || 'ADMIN';
   const userName = localStorage.getItem('brajmart_user_name') || 'Admin';
 
@@ -33,7 +37,7 @@ export async function apiClient<T>(
     }
   }
 
-  const response = await fetch(endpoint, {
+  const response = await fetch(requestUrl, {
     ...options,
     headers,
   });
