@@ -1,0 +1,5 @@
+{
+  "watch": ["vite.config.ts", "tailwind.config.js", "package.json"],
+  "ext": "ts,js,json",
+  "exec": "vite"
+}
