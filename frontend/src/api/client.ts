@@ -55,7 +55,11 @@ export async function apiClient<T>(
   try {
     data = await response.json();
   } catch {
-    throw new ApiError('NETWORK_ERROR', 'Failed to parse server response.', response.status);
+    throw new ApiError(
+      'INVALID_SERVER_RESPONSE',
+      `Server returned a non-JSON response for ${requestUrl} (${response.status}).`,
+      response.status
+    );
   }
 
   if (!response.ok || !data.success) {
